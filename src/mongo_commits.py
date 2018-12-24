@@ -15,6 +15,14 @@ cursor = mycol.find(
     {}, {'sha': 1, 'url': 1, 'commit.message': 1, 'commit.comment_count': 1, 
          'stats.deletions': 1, 'stats.additions': 1, 'stats.total': 1, 'files': 1})
 
+reposi = mycol.find({}, {"name": 1, "full_name": 1, "private": 1,
+                         "url": 1, "fork": 1, "size": 1, "watchers_count": 1,
+                         "language": 1, "has_issues": 1, "has_downloads": 1,
+                         "has_wiki": 1, "forks_count": 1, "open_issues_count": 1,
+                         "forks": 1, "open_issues": 1, "forks": 1, "open_issues": 1,
+                         "watchers": 1, "network_count": 1, "owner": 1,
+                         "permissions": 1})
+
 with open('total.csv', 'w') as outfile:
     fields = ['sha', 'message', 'comment_count', 'total_deletions', 'total_additions', 
               'total', 'comments', 'additions', 'deletions', 'changes', 'status', 
@@ -30,7 +38,7 @@ with open('total.csv', 'w') as outfile:
 
         body = getCommentBySha(sha)
 
-        repos = getReposInfo(extractURL(commits['url']))
+        repos = getReposInfo(reposi, extractURL(commits['url']))
 
         if 'commit' in commits:
             commit = commits['commit']
