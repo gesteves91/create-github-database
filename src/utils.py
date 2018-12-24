@@ -80,6 +80,5 @@ def getReposInfo(cursor, url):
       dictionaryRepos.update({"push": repos["permissions"]["push"]})
       dictionaryRepos.update({"pull": repos["permissions"]["pull"]})
       dictionaryRepos.update({"admin": repos["permissions"]["admin"]})
-      break
   
   return dictionaryRepos
