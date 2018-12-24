@@ -56,9 +56,8 @@ def extractURL(url):
 
 def getReposInfo(cursor, url):
 
-  print("I am here")
-
   dictionaryRepos = {}
+  print(dictionaryRepos)
 
   for repos in cursor:
     if repos["url"] == url:
