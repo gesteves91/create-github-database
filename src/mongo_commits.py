@@ -15,7 +15,7 @@ cursor = mycol.find(
     {}, {'sha': 1, 'url': 1, 'commit.message': 1, 'commit.comment_count': 1, 
          'stats.deletions': 1, 'stats.additions': 1, 'stats.total': 1, 'files': 1})
 
-reposi = mycol.find({}, {"name": 1, "full_name": 1, "private": 1,
+reposi = mydb["repos"].find({}, {"name": 1, "full_name": 1, "private": 1,
                          "url": 1, "fork": 1, "size": 1, "watchers_count": 1,
                          "language": 1, "has_issues": 1, "has_downloads": 1,
                          "has_wiki": 1, "forks_count": 1, "open_issues_count": 1,
