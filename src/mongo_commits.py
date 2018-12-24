@@ -38,6 +38,7 @@ with open('total.csv', 'w') as outfile:
 
         body = getCommentBySha(sha)
 
+        repos = None
         repos = getReposInfo(reposi, extractURL(commits['url']))
         print(repos)
 
