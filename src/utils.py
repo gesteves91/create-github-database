@@ -56,7 +56,7 @@ def extractURL(url):
 
 def getReposInfo(url):
 
-  cursor = mycol.find({"url": url})
+  cursor = mydb["repos"].find({"url": url})
 
   dictionaryRepos = {}
 
