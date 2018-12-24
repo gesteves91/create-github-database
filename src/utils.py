@@ -58,7 +58,9 @@ def getReposInfo(cursor, url):
 
   dictionaryRepos = {}
 
-  for repos in cursor:
+  data = cursor.find({"url": url})
+
+  for repos in data:
     print(repos)
     if repos["url"] == url:
       dictionaryRepos.update({"name": repos["name"]})
