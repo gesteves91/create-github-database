@@ -4,7 +4,7 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["msr14"]
 mycol = mydb["repos"]
 
-cursor = mycol.find({"url": "https://api.github.com/repos/mavam/stat-cookbook"})
+cursor = mycol.find_one({"url": "https://api.github.com/repos/mavam/stat-cookbook"})
 
 for repos in cursor:
   for key in repos:

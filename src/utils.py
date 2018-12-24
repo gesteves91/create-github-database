@@ -61,52 +61,27 @@ def getReposInfo(url):
   cursor = mydb["repos"].find({"url": url})
 
   for repos in cursor:
-    for key in repos:
-      if key == 'name':
-        dictionaryRepos.update({'name': repos[key]})
-      if key == 'full_name':
-        dictionaryRepos.update({'full_name': repos[key]})
-      if key == 'private':
-        dictionaryRepos.update({'private': repos[key]})
-      if key == 'fork':
-        dictionaryRepos.update({'fork': repos[key]})
-      if key == 'size':
-        dictionaryRepos.update({'size': repos[key]})
-      if key == 'watchers_count':
-        dictionaryRepos.update({'watchers_count': repos[key]})
-      if key == 'language':
-        dictionaryRepos.update({'language': repos[key]})
-      if key == 'has_issues':
-        dictionaryRepos.update({'has_issues': repos[key]})
-      if key == 'has_downloads':
-        dictionaryRepos.update({'has_downloads': repos[key]})
-      if key == 'has_wiki':
-        dictionaryRepos.update({'has_wiki': repos[key]})
-      if key == 'forks_count':
-        dictionaryRepos.update({'forks_count': repos[key]})
-      if key == 'open_issues_count':
-        dictionaryRepos.update({'open_issues_count': repos[key]})
-      if key == 'forks':
-        dictionaryRepos.update({'forks': repos[key]})
-      if key == 'open_issues':
-        dictionaryRepos.update({'open_issues': repos[key]})
-      if key == 'watchers':
-        dictionaryRepos.update({'watchers': repos[key]})
-      if key == 'network_count':
-        dictionaryRepos.update({'network_count': repos[key]})
-      if key == 'owner':
-        owner = repos[key]
-        for data in owner:
-          if data == 'type':
-            dictionaryRepos.update({'type': repos[key]})
-      if key == 'permissions':
-        permission = repos[key]
-        for data in permission:
-          if data == 'admin':
-            dictionaryRepos.update({'admin': repos[key]})
-          if data == 'push':
-            dictionaryRepos.update({'push': repos[key]})
-          if data == 'pull':
-            dictionaryRepos.update({'pull': repos[key]})
+    if repos["url"] == url:
+      dictionaryRepos.update({"name": repos["name"]})
+      dictionaryRepos.update({"full_name": repos["full_name"]})
+      dictionaryRepos.update({"private": repos["private"]})
+      dictionaryRepos.update({"fork": repos["fork"]})
+      dictionaryRepos.update({"size": repos["size"]})
+      dictionaryRepos.update({"watchers_count": repos["watchers_count"]})
+      dictionaryRepos.update({"language": repos["language"]})
+      dictionaryRepos.update({"has_issues": repos["has_issues"]})
+      dictionaryRepos.update({"has_downloads": repos["has_downloads"]})
+      dictionaryRepos.update({"has_wiki": repos["has_wiki"]})
+      dictionaryRepos.update({"forks_count": repos["forks_count"]})
+      dictionaryRepos.update({"open_issues_count": repos["open_issues_count"]})
+      dictionaryRepos.update({"forks": repos["forks"]})
+      dictionaryRepos.update({"open_issues": repos["open_issues"]})
+      dictionaryRepos.update({"watchers": repos["watchers"]})
+      dictionaryRepos.update({"network_count": repos["network_count"]})
+      dictionaryRepos.update({"type": repos["owner"]["type"]})
+      dictionaryRepos.update({"push": repos["permissions"]["push"]})
+      dictionaryRepos.update({"pull": repos["permissions"]["pull"]})
+      dictionaryRepos.update({"admin": repos["permissions"]["admin"]})
+      break
   
   return dictionaryRepos
