@@ -56,13 +56,12 @@ def extractURL(url):
 
 def getReposInfo(cursor, url):
 
-  dictionaryRepos = {}
+  print(cursor)
 
-  print(url)
+  dictionaryRepos = {}
 
   for repos in cursor:
     if repos["url"] == url:
-      print(repos['name'])
       dictionaryRepos.update({"name": repos["name"]})
       dictionaryRepos.update({"full_name": repos["full_name"]})
       dictionaryRepos.update({"private": repos["private"]})
@@ -83,6 +82,5 @@ def getReposInfo(cursor, url):
       dictionaryRepos.update({"push": repos["permissions"]["push"]})
       dictionaryRepos.update({"pull": repos["permissions"]["pull"]})
       dictionaryRepos.update({"admin": repos["permissions"]["admin"]})
-  
-  print(dictionaryRepos)
+
   return dictionaryRepos
