@@ -38,9 +38,9 @@ with open('total.csv', 'w') as outfile:
 
         body = getCommentBySha(sha)
 
-        repos = None
-        repos = getReposInfo(reposi, extractURL(commits['url']))
-        print(repos)
+        extracted_url = commits['url']
+        print(extracted_url)
+        repos = getReposInfo(reposi, extracted_url)
 
         if 'commit' in commits:
             commit = commits['commit']
