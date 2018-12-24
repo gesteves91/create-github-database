@@ -39,8 +39,8 @@ with open('total.csv', 'w') as outfile:
         body = getCommentBySha(sha)
 
         extracted_url = commits['url']
-        print(reposi)
         repos = getReposInfo(reposi, extracted_url)
+        print(repos)
 
         if 'commit' in commits:
             commit = commits['commit']
@@ -60,7 +60,6 @@ with open('total.csv', 'w') as outfile:
                     additions = stats[key]
                 else:
                     total = stats[key]
-            print(repos['name'])
             flattened_record = {
                 'sha': sha,
                 'message': messageCount[0],
