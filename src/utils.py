@@ -54,11 +54,9 @@ def extractURL(url):
 
   return head
 
-def getReposInfo(url):
+def getReposInfo(cursor, url):
 
   dictionaryRepos = {}
-
-  cursor = mydb["repos"].find({"url": url})
 
   for repos in cursor:
     if repos["url"] == url:
