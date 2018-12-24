@@ -57,9 +57,9 @@ def extractURL(url):
 def getReposInfo(cursor, url):
 
   dictionaryRepos = {}
-  print(dictionaryRepos)
 
   for repos in cursor:
+    print(repos)
     if repos["url"] == url:
       dictionaryRepos.update({"name": repos["name"]})
       dictionaryRepos.update({"full_name": repos["full_name"]})
