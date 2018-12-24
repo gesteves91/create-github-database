@@ -60,6 +60,7 @@ with open('total.csv', 'w') as outfile:
                     additions = stats[key]
                 else:
                     total = stats[key]
+            print(repos['name'])
             flattened_record = {
                 'sha': sha,
                 'message': messageCount[0],
