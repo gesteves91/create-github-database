@@ -11,6 +11,8 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["msr14"]
 mycol = mydb["commits"]
 
+mydb['repos'].create_index("url")
+
 cursor = mycol.find(
     {}, {'sha': 1, 'url': 1, 'commit.message': 1, 'commit.comment_count': 1, 
          'stats.deletions': 1, 'stats.additions': 1, 'stats.total': 1, 'files': 1})

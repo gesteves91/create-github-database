@@ -84,4 +84,5 @@ def getReposInfo(url):
       dictionaryRepos.update({"admin": repos["permissions"]["admin"]})
       break
 
+  print(dictionaryRepos)
   return dictionaryRepos
