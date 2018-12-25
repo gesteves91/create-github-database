@@ -1,6 +1,7 @@
 import csv
 import pymongo
 import codecs
+
 from utils import getCommitCount
 from utils import getCommentBySha
 from utils import getFileNamesAndStatus
@@ -17,10 +18,11 @@ mydb['repo_labels'].create_index("repo")
 
 cursor = mycol.find(
     {}, {'sha': 1, 'url': 1, 'commit.message': 1, 'commit.comment_count': 1, 
-         'stats.deletions': 1, 'stats.additions': 1, 'stats.total': 1, 'files': 1})
+         'stats.deletions': 1, 'stats.additions': 1, 'stats.total': 1, 
+         'files': 1})
 
 with open('total.csv', 'w') as outfile:
-    fields = ['sha', 'message', 'comment_count', 'total_deletions', 'total_additions', 
+    fields = ['sha', 'message', 'comment_count', 'date', 'total_deletions', 'total_additions', 
               'total', 'comments', 'additions', 'deletions', 'changes', 'status', 
               'filenames', 'name', 'fullname', 'private', 'fork', 'size', 'watchers_count',
               'language', 'has_issues', 'has_downloads', 'has_wiki', 'forks_count',
@@ -37,12 +39,16 @@ with open('total.csv', 'w') as outfile:
         extracted_url = extractURL(commits['url'])
         repos = getReposInfo(extracted_url)
 
+        date = commits['commit']['committer']['date']
+
         label = getReposLabels(repos['name'])
 
+        # Taking care of the commit.
         if 'commit' in commits:
             commit = commits['commit']
             messageCount = getCommitCount(commit)
 
+        # Taking care of files.
         if 'files' in commits:
             commit = commits['files']
             filenames, status, additions_array, deletions_array, changes = getFileNamesAndStatus(commits['files'])
@@ -61,6 +67,7 @@ with open('total.csv', 'w') as outfile:
                 'sha': sha,
                 'message': messageCount[0],
                 'comment_count': messageCount[1],
+                'date': date,
                 'total_additions': additions,
                 'total_deletions': deletions,
                 'total': total,
