@@ -7,7 +7,7 @@ mycol = mydb["repo_labels"]
 #cursor = mycol.find({"url": "https://api.github.com/repos/mavam/stat-cookbook"})
 cursor = mycol.find({}, {"name": 1, "repo": 1, "owner": 1})
 
-name = "akka"
+name = "ProjectTemplate"
 
 for repos in cursor:
   if repos["repo"] == name:

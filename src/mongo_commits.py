@@ -6,24 +6,18 @@ from utils import getCommentBySha
 from utils import getFileNamesAndStatus
 from utils import getReposInfo
 from utils import extractURL
+from utils import getReposLabels
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["msr14"]
 mycol = mydb["commits"]
 
 mydb['repos'].create_index("url")
+mydb['repo_labels'].create_index("repo")
 
 cursor = mycol.find(
     {}, {'sha': 1, 'url': 1, 'commit.message': 1, 'commit.comment_count': 1, 
          'stats.deletions': 1, 'stats.additions': 1, 'stats.total': 1, 'files': 1})
-
-'''reposi = mydb["repos"].find({}, {"name": 1, "full_name": 1, "private": 1,
-                         "url": 1, "fork": 1, "size": 1, "watchers_count": 1,
-                         "language": 1, "has_issues": 1, "has_downloads": 1,
-                         "has_wiki": 1, "forks_count": 1, "open_issues_count": 1,
-                         "forks": 1, "open_issues": 1, "forks": 1, "open_issues": 1,
-                         "watchers": 1, "network_count": 1, "owner": 1,
-                         "permissions": 1})'''
 
 with open('total.csv', 'w') as outfile:
     fields = ['sha', 'message', 'comment_count', 'total_deletions', 'total_additions', 
@@ -31,7 +25,7 @@ with open('total.csv', 'w') as outfile:
               'filenames', 'name', 'fullname', 'private', 'fork', 'size', 'watchers_count',
               'language', 'has_issues', 'has_downloads', 'has_wiki', 'forks_count',
               'open_issues_count', 'forks', 'open_issues', 'watchers', 'network_count', 
-              'type', 'admin', 'push', 'pull']
+              'type', 'admin', 'push', 'pull', 'label', 'owner']
 
     write = csv.DictWriter(outfile, fieldnames=fields)
     write.writeheader()
@@ -42,6 +36,8 @@ with open('total.csv', 'w') as outfile:
 
         extracted_url = extractURL(commits['url'])
         repos = getReposInfo(extracted_url)
+
+        label = getReposLabels(repos['name'])
 
         if 'commit' in commits:
             commit = commits['commit']
@@ -94,6 +90,8 @@ with open('total.csv', 'w') as outfile:
                 'admin': repos['admin'],
                 'push': repos['push'],
                 'pull': repos['pull'],
+                'label': label[0],
+                'owner': label[1]
                 }
             write.writerow(flattened_record)
     print("Writing complete!!!")

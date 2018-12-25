@@ -54,6 +54,25 @@ def extractURL(url):
 
   return head
 
+def getReposLabels(name):
+
+  labels = []
+
+  cursor = mydb["repo_labels"].find({"repo": name})
+
+  for repos in cursor:
+    if repos["repo"] == name:
+      labels.append(repos["name"])
+      labels.append(repos["owner"])
+      break
+
+  # Empty list.
+  if not labels:
+    labels.append(None)
+    labels.append(None)
+
+  return labels
+
 def getReposInfo(url):
 
   cursor = mydb["repos"].find({"url": url})
@@ -84,5 +103,4 @@ def getReposInfo(url):
       dictionaryRepos.update({"admin": repos["permissions"]["admin"]})
       break
 
-  print(dictionaryRepos)
   return dictionaryRepos
