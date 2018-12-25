@@ -16,10 +16,13 @@ mycol = mydb["commits"]
 mydb['repos'].create_index("url")
 mydb['repo_labels'].create_index("repo")
 
-cursor = mycol.find(
+'''cursor = mycol.find(
     {}, {'sha': 1, 'url': 1, 'commit.message': 1, 'commit.comment_count': 1, 
          'stats.deletions': 1, 'stats.additions': 1, 'stats.total': 1, 
-         'files': 1})
+         'files': 1})'''
+
+cursor = mycol.find(
+    {}, {'sha': 1, 'url': 1, 'commit': 1, 'stats': 1, 'files': 1})
 
 with open('total.csv', 'w') as outfile:
     fields = ['sha', 'message', 'comment_count', 'date', 'total_deletions', 'total_additions', 
