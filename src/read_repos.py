@@ -38,7 +38,7 @@ for repos in cursor:
     print(repos["permissions"]["pull"])
     print(repos["permissions"]["admin"])
     break
-  '''for key in repos:
+    '''for key in repos:
     if key == "url" and repos[key] == modified_url:
       for key in repos:
         if key == 'name':
