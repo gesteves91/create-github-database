@@ -8,6 +8,7 @@ from utils import getFileNamesAndStatus
 from utils import getReposInfo
 from utils import extractURL
 from utils import getReposLabels
+from utils import getUsersInfo
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["msr14"]
@@ -22,7 +23,7 @@ mydb['repo_labels'].create_index("repo")
          'files': 1})'''
 
 cursor = mycol.find(
-    {}, {'sha': 1, 'url': 1, 'commit': 1, 'stats': 1, 'files': 1})
+    {}, {'sha': 1, 'url': 1, 'commit': 1, 'stats': 1, 'files': 1, 'author': 1})
 
 with open('total.csv', 'w') as outfile:
     fields = ['sha', 'message', 'comment_count', 'date', 'total_deletions', 'total_additions', 
@@ -30,7 +31,7 @@ with open('total.csv', 'w') as outfile:
               'filenames', 'name', 'fullname', 'private', 'fork', 'size', 'watchers_count',
               'language', 'has_issues', 'has_downloads', 'has_wiki', 'forks_count',
               'open_issues_count', 'forks', 'open_issues', 'watchers', 'network_count', 
-              'type', 'admin', 'push', 'pull', 'label', 'owner']
+              'type', 'admin', 'push', 'pull', 'label', 'owner', 'followers', 'following', 'public_gists']
 
     write = csv.DictWriter(outfile, fieldnames=fields)
     write.writeheader()
@@ -45,6 +46,8 @@ with open('total.csv', 'w') as outfile:
         date = commits['commit']['committer']['date']
 
         label = getReposLabels(repos['name'])
+
+        users = getUsersInfo(label[1])
 
         # Taking care of the commit.
         if 'commit' in commits:
@@ -101,7 +104,10 @@ with open('total.csv', 'w') as outfile:
                 'push': repos['push'],
                 'pull': repos['pull'],
                 'label': label[0],
-                'owner': label[1]
+                'owner': label[1],
+                'followers': users['followers'],
+                'following': users['following'],
+                'public_gists': users['public_gists'],
                 }
             write.writerow(flattened_record)
     print("Writing complete!!!")

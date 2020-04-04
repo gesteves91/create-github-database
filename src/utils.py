@@ -104,3 +104,24 @@ def getReposInfo(url):
       break
 
   return dictionaryRepos
+
+def getUsersInfo(name):
+  
+  cursor = mydb["users"].find({"login": name})
+
+  dictionaryAuthors = {}
+
+  for repos in cursor:
+    if repos["login"] == name:
+      #dictionaryRepos.update({"hireable": repos["hireable"]})
+      dictionaryAuthors.update({"followers": repos["followers"]})
+      dictionaryAuthors.update({"following": repos["following"]})
+      dictionaryAuthors.update({"public_gists": repos["public_gists"]})
+      break
+
+  if not dictionaryAuthors:
+    dictionaryAuthors.update({"followers": 0})
+    dictionaryAuthors.update({"following": 0})
+    dictionaryAuthors.update({"public_gists": 0})
+
+  return dictionaryAuthors
